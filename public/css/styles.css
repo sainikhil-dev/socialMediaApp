@@ -1,0 +1,20 @@
+#homepage{
+    text-align: center;
+}
+.btn-facebook{
+    background-color: #4aa1f3;
+    color:#fff;
+    width:auto;
+}
+
+.btn-gplus{
+    background-color: #e44b34;
+    color:#fff;
+    width:auto;
+}
+
+.btn-instagram{
+    background-color:rgb(195,42,163);
+    color:#fff;
+    width:auto;
+}
