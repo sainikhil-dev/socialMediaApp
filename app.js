@@ -10,7 +10,9 @@ const session = require("express-session");
     const User=require('./models/user')
 //Express config
 app.use(cookieParser());
+//Link passport to server
 require('./passport/google-passport');
+require('./passport/facebook-passport');
 app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
   app.use(session({ secret: 'keyboard cat',
@@ -52,6 +54,16 @@ app.get('/auth/google',
 
 app.get('/auth/google/callback', 
   passport.authenticate('google', { failureRedirect: '/' }),
+  (req, res)=> {
+    // Successful authentication, redirect home.
+    res.redirect('/profile');
+  });
+  //Facebook auth route
+  app.get('/auth/facebook',
+  passport.authenticate('facebook'));
+
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/' }),
   (req, res)=> {
     // Successful authentication, redirect home.
     res.redirect('/profile');
