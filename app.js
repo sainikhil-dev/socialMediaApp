@@ -8,6 +8,10 @@ const session = require("express-session");
     const cookieParser=require('cookie-parser');
     const passport=require('passport');
     const User=require('./models/user')
+    //helper
+    const{
+      ensureAuthentication, ensureGuest
+    }=require('./helpers/auth');
 //Express config
 app.use(cookieParser());
 //Link passport to server
@@ -37,7 +41,7 @@ const path=require('path');
 app.use(express.static('public'));
 app.set('views',path.join(__dirname,'/views'));
 //handle routing
-app.get('/',(req,res)=>{
+app.get('/',ensureGuest,(req,res)=>{
     res.render('main');
 });
 app.get('/about',(req,res)=>{
@@ -70,6 +74,18 @@ app.get('/auth/facebook/callback',
     // Successful authentication, redirect home.
     res.redirect('/profile');
   });
+  //ROUTE to mail form
+  app.post('/addemail',(req,res)=>{
+    const email=req.body.email;
+    User.findById({_id: req.user._id})
+    .then((user)=>{
+      user.email=email;
+      user.save()
+      .then(()=>{
+        res.redirect('/profile');
+      });
+    });
+  });
 //connect to remote database
 mongoose.Promise=global.Promise;
 mongoose.connect(keys.MongoURI,{
@@ -80,7 +96,7 @@ mongoose.connect(keys.MongoURI,{
     console.log('Connected to remote database')
 });
 const port=process.env.PORT||3000;
-app.get('/profile',(req,res)=>{
+app.get('/profile',ensureAuthentication,(req,res)=>{
   User.findById({_id:req.user._id})
   .then((user)=>{
     res.render('profile',{

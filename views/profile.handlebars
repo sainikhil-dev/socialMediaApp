@@ -53,8 +53,15 @@
   </div>
  <div class="col-sm">
    <h1>Profile</h1>
+   <p class="card-text"><i class="fa fa-user"></i> {{user.fullname}}</p>
+   {{#if user.email}}
    <p class="card-text"><i class="fa fa-envelope"></i> {{user.email}}</p>
-    <p class="card-text"><i class="fa fa-user"></i> {{user.fullname}}</p>
+    {{else}}
+    <form action="/addemail" method="POST">
+    <input type="text" name="email" class="form-control" placeholder="Enter email adress">
+    <button type="submit" class="btn btn-danger">Save</button>
+    </form>
+    {{/if}}
  </div>
   </div>
   
