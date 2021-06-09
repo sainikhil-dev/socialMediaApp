@@ -9,6 +9,12 @@ const userschema=new schema({
         type:String,
         default:''
     },
+    phone:{
+        type:Number
+    },
+    location:{
+        type:String
+    },
     firstname:{
         type:String,
         default:''

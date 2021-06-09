@@ -86,6 +86,30 @@ app.get('/auth/facebook/callback',
       });
     });
   });
+  //ROUTE to phone form
+  app.post('/addphone',(req,res)=>{
+    const phone=req.body.phone;
+    User.findById({_id: req.user._id})
+    .then((user)=>{
+      user.phone=phone;
+      user.save()
+      .then(()=>{
+        res.redirect('/profile');
+      });
+    });
+  });
+  //ROUTE to location form
+  app.post('/addlocation',(req,res)=>{
+    const location=req.body.location;
+    User.findById({_id: req.user._id})
+    .then((user)=>{
+      user.location=location;
+      user.save()
+      .then(()=>{
+        res.redirect('/profile');
+      });
+    });
+  });
 //connect to remote database
 mongoose.Promise=global.Promise;
 mongoose.connect(keys.MongoURI,{
