@@ -1,27 +1,47 @@
 #homepage{
     text-align: center;
 }
-.btn-facebook{
+.btn-facebook {
     background-color: #4aa1f3;
-    color:#fff;
-    width:auto;
+    border-radius: 0%;
+    color: #fff;
+    width: auto;
 }
-
+.btn-facebook:link,
+.btn-facebook:visited{
+    text-decoration: none;
+    background-color: #4aa1f3;
+    color: #fff;
+}
 .btn-gplus{
+    background: #e44b34;
+    color: #fff;
+    border-radius: 0%;
+    width: auto;
+}
+.btn-gplus:link,
+.btn-gplus:visited{
     background-color: #e44b34;
-    color:#fff;
-    width:auto;
+    color: #fff;
+    text-decoration: none;
 }
 
-.btn-instagram{
-    background-color:rgb(195,42,163);
-    color:#fff;
-    width:auto;
-}
 #welcome{
-    color:greenyellow;
+    color: #4aa1f3;
+}
+h1{
+    text-align: center;
 }
 #main{
     margin-top: 60px;
     margin-bottom: 50px;
+}
+#card-img-top{
+    color: aliceblue;
+}
+.col-sm-4{
+    margin-bottom: 5px;
+}
+#address{
+    color:grey;
 }

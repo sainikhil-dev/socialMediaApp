@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Social Media App</title>    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
@@ -16,29 +9,23 @@
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/styles.css">
     <script src="/js/scripts.js"></script>
-</head>
-<body>
-    {{> _navbar}}
-    <div id="main">
-         {{{body}}}
-         <div id="homepage" class="container">
-    <h1>Welcome</h1>
-    <h1>Social Media App</h1>
-
-    
-    <h1>
-    <a href="auth/facebook" class="btn-social btn-facebook btn-lg">
-    <i class="fa fa-facebook"></i>  Signup With Facebook</a>
-    </h1>
-    <h1>
-    <a href="auth/google" class="btn-social btn-gplus btn-lg">
-    <i class="fa fa-google-plus"></i>  Signup With Google</a>
-    </h1>
-    
+{{>_navbar}}
+<div class="container-fluid">
+   
+<div class="row">
+     {{#each users}}
+    <div class="col-sm-4">
+        <div class="card" style="width: 18rem;">
+  <img class="card-img-top" style="margin-top: 60px;" src="{{image}}" >
+  <div class="card-body">
+    <h5 class="card-title">{{fullname}}</h5>
+    <p id="address" class="card-title">{{location}}</p>
+   
+  </div>
+</div>
+    </div>
+    {{/each}}
+</div>
 
 </div>
-    
-    </div>
-    {{>_footer}}
-</body>
-</html>
+{{>_footer}}

@@ -86,6 +86,14 @@ app.get('/auth/facebook/callback',
       });
     });
   });
+  //HANDLE ROUTE for all users
+  app.get('/users',(req,res)=>{
+    User.find({}).then((users)=>{
+      res.render('users',{
+        users:users
+      });
+    });
+  });
   //ROUTE to phone form
   app.post('/addphone',(req,res)=>{
     const phone=req.body.phone;
