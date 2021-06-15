@@ -7,7 +7,8 @@ const session = require("express-session");
     const bodyParser = require("body-parser");
     const cookieParser=require('cookie-parser');
     const passport=require('passport');
-    const User=require('./models/user')
+    const User=require('./models/user');
+    const Post=require('./models/post');
     //helper
     const{
       ensureAuthentication, ensureGuest
@@ -87,7 +88,7 @@ app.get('/auth/facebook/callback',
     });
   });
   //HANDLE ROUTE for all users
-  app.get('/users',(req,res)=>{
+  app.get('/users',ensureAuthentication,(req,res)=>{
     User.find({}).then((users)=>{
       res.render('users',{
         users:users
@@ -106,6 +107,15 @@ app.get('/auth/facebook/callback',
       });
     });
   });
+  //ROUTE to show individual user profile
+  app.get('/user/:id',(req,res)=>{
+    User.findById({_id: req.params.id})
+    .then((user)=>{
+      res.render('user',{
+        user:user
+      });
+    });
+  });
   //ROUTE to location form
   app.post('/addlocation',(req,res)=>{
     const location=req.body.location;
@@ -117,6 +127,10 @@ app.get('/auth/facebook/callback',
         res.redirect('/profile');
       });
     });
+  });
+  //Handling post route
+  app.get('/addPost',(req,res)=>{
+    res.render('addPost');
   });
 //connect to remote database
 mongoose.Promise=global.Promise;

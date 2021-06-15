@@ -10,27 +10,13 @@
     <link rel="stylesheet" href="/css/styles.css">
     <script src="/js/scripts.js"></script>
 {{>_navbar}}
-
-<div class="container-fluid">
-   
-<div class="row">
-     {{#each users}}
-    <div class="col-sm-4">
-        <div class="card" style="width: 18rem;">
-  <img class="card-img-top" style="margin-top: 60px;" src="{{image}}" >
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" style="margin-top: 70px;"  src={{user.image}} alt="Card image cap">
   <div class="card-body">
-    <a href="/user/{{id}}"><h5 class="card-title">{{fullname}}</h5></a>
-    <p id="address" class="card-title">{{location}}</p>
-    
+    <h5 class="card-title">{{user.fullname}}</h5>
+    <p class="card-text">{{user.location}}</p>
+   
   </div>
- 
 </div>
 
-    </div>
-    
-    {{/each}}
-    
-</div>
-
-</div>
 {{>_footer}}
