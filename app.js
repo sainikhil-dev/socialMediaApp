@@ -9,6 +9,7 @@ const session = require("express-session");
     const passport=require('passport');
     const User=require('./models/user');
     const Post=require('./models/post');
+    const methodOverride=require('method-override');
     //helper
     const{
       ensureAuthentication, ensureGuest
@@ -22,8 +23,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
   app.use(session({ secret: 'keyboard cat',
 resave:true,saveUninitialized:true }));
+app.use(methodOverride('_method'));
   app.use(passport.initialize());
   app.use(passport.session());
+ 
   //setting user as global variable
   app.use((req,res,next)=>{
     res.locals.user=req.user||null;
@@ -128,10 +131,70 @@ app.get('/auth/facebook/callback',
       });
     });
   });
-  //Handling post route
+  //Handling get post route
   app.get('/addPost',(req,res)=>{
     res.render('addPost');
   });
+//handling post route
+app.post('/savePost',(req,res)=>{
+  var allowComments;
+  if(req.body.allowComments){
+    allowComments=true;
+  }
+  else{
+    allowComments=false;
+  }
+  const newPost={
+    title:req.body.title,
+    body:req.body.body,
+    status:req.body.status,
+    allowComments:allowComments,
+    user:req.user._id
+  }
+  new Post(newPost).save()
+  .then(()=>{
+    res.redirect('posts');
+  });
+});
+//Handling edit  route
+app.get('/editpost/:id',(req,res)=>{
+  Post.findOne({_id:req.params.id})
+  .then((post)=>{
+    res.render('editingPost',{
+      post:post
+    });
+  });
+});
+app.put('/editingPost/:id',(req,res)=>{
+  Post.findOne({_id:req.params.id})
+  .then((post)=>{
+    var allowComments;
+    if(req.body.allowComments){
+      allowComments=true;
+    }
+    else{
+      allowComments=false;
+    }
+    post.title=req.body.title;
+    post.body=req.body.body;
+    post.status=req.body.status;
+    post.allowComments=allowComments;
+    post.save()
+    .then(()=>{
+      res.redirect('/profile');
+    });
+  });
+});
+app.get('/posts',ensureAuthentication,(req,res)=>{
+  Post.find({status:'public'})
+  .populate('user')
+  .sort({date:'desc'})
+  .then((posts)=>{
+    res.render('publicPosts',{
+      posts:posts
+    });
+  });
+});
 //connect to remote database
 mongoose.Promise=global.Promise;
 mongoose.connect(keys.MongoURI,{
@@ -143,12 +206,14 @@ mongoose.connect(keys.MongoURI,{
 });
 const port=process.env.PORT||3000;
 app.get('/profile',ensureAuthentication,(req,res)=>{
-  User.findById({_id:req.user._id})
-  .then((user)=>{
+  Post.find({user:req.user._id})
+  .populate('user')
+  .sort({date:'desc'})
+  .then((posts)=>{
     res.render('profile',{
-      user:user
-    })
-  })
+      posts:posts
+    });
+  });
 });
 app.listen(port,()=>{
     console.log('Server is running ')

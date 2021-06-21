@@ -10,30 +10,21 @@
     <link rel="stylesheet" href="/css/styles.css">
     <script src="/js/scripts.js"></script>
 {{>_navbar}}
-<h1 style="margin-top: 60px;">Add Post</h1>
-<div class="container">
-    <form action="/savePost" method="POST">
-  <div class="form-group">
-    <label for="exampleInputEmail1">Title</label>
-    <input type="text" name="title" class="form-control"  placeholder="Add title">
+<div style="margin-top: 80px;" class="container">
+    {{#each posts}}
+    <div style="margin-left: 5px;"  class="media">
+  <img class="mr-3 post-user-pic" src="{{user.image}}" alt="Generic placeholder image">
+  <div class="media-body">
+    <h3 class="mt-0">{{user.fullname}}</h3>
+    <h4>{{title}} <small class="red"><i class="fa fa-globe"></i></small></h4>
+    <p>{{body}}</p>
+    <small>{{date}}</small>
     
   </div>
-  <div class="form-group">
-    <label for="body">Body</label>
-    <textarea type="text" name="body" class="form-control"  placeholder="Typt something..."></textarea>
-  </div>
-  <div class="form-group">
-    <label for="status">Status</label>
-    <select name="status">
-      <option value="public">Public</option>
-      <option value="private">Private</option>
-    </select>
-  </div>
-  <div class="form-group form-check">
-    <input type="checkbox" name="allowComments" class="form-check-input" id="checkbox">
-    <label class="form-check-label" for="checkbox">Allow Comment</label>
-  </div>
-  <button type="submit" class="btn btn-primary">POST</button>
-</form>
+</div>
+<hr>
+{{else}}
+<p>No Posts Found</p>
+{{/each}}
 </div>
 {{>_footer}}
