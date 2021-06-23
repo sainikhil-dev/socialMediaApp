@@ -56,5 +56,13 @@ h1{
 
   }
   .red{
-      color:green;
+      color:red;
+  }
+  #comment-user-picture{
+      width: 65px;
+      height:auto;
+  }
+  .card-img-top{
+      width:200px;
+      height:auto;
   }
